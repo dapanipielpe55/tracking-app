@@ -7,29 +7,32 @@ workflows:
       - npm install
       - npm install @capacitor/cli
 
-      # Verificar estructura
-      - ls
-      - ls www
+      # DEBUG estructura
+      - pwd
+      - ls -la
+      - ls -la www || echo "NO EXISTE WWW"
 
-      # Inicializar capacitor
+      # Inicializar capacitor (forzado limpio)
+      - rm -rf android
       - npx cap init tracking com.tracking.app --web-dir=www
 
-      # Forzar copia web
-      - npx cap copy
-
-      # Crear android (clave)
+      # ESTE ES EL PASO CLAVE (sin || true)
       - npx cap add android
 
-      # Sincronizar
+      # Verificar si se creó android
+      - ls -la
+      - ls -la android || echo "ANDROID NO SE CREO"
+
+      # Sync
       - npx cap sync
 
-      # Verificar android existe
-      - ls
+      # Verificar gradlew
       - ls android
+      - ls android | grep gradlew || echo "NO HAY GRADLEW"
 
       # Compilar
       - cd android
-      - chmod +x gradlew || true
+      - chmod +x gradlew
       - ./gradlew assembleDebug --stacktrace
 
     artifacts:
