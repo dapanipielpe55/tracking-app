@@ -6,6 +6,6 @@ workflows:
     scripts:
       - cd android
       - chmod +x gradlew || true
-      - ./gradlew assembleDebug
+      - ./gradlew assembleDebug --stacktrace
     artifacts:
       - android/app/build/outputs/**/*.apk
