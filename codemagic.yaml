@@ -10,7 +10,8 @@ workflows:
       - npx cap add android || true
       - npx cap sync
       - cd android
-      - chmod +x gradlew
+      - ls
+      - chmod +x gradlew || true
       - ./gradlew assembleDebug
     artifacts:
       - android/app/build/outputs/**/*.apk
