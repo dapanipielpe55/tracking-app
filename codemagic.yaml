@@ -1,6 +1,10 @@
 # codemagic.yaml
-
-# Download Gradle
+workflows:
+  android-build:
+    name: Android Build
+    environment:
+      node: latest
+      # Download Gradle
 install:
   - name: Download Gradle
     script: |
@@ -25,4 +29,12 @@ install:
         echo "Build failed!"
         exit 1
       fi
+    scripts:
+      - cd android
+      - gradle wrapper --gradle-version 8.1.0
+      - chmod +x gradlew
+      - ./gradlew assembleDebug --stacktrace
+    artifacts:
+      - android/app/build/outputs/**/*.apk
+
 
