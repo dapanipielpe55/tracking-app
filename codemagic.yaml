@@ -5,16 +5,19 @@ workflows:
       node: latest
     scripts:
       - npm install
-      - npm install @capacitor/cli
 
-      # Crear capacitor correctamente
+      # Instalar todo Capacitor correctamente
+      - npm install @capacitor/core @capacitor/cli @capacitor/android
+
+      # Inicializar
       - npx cap init tracking com.tracking.app --web-dir=www
 
-      # IMPORTANTE: instalar android platform antes
-      - npm install @capacitor/android
-
-      # Crear android (ahora sí funciona)
+      # Crear android
       - npx cap add android
+
+      # Verificar
+      - ls -la
+      - ls -la android
 
       # Sync
       - npx cap sync
@@ -22,7 +25,7 @@ workflows:
       # Compilar
       - cd android
       - chmod +x gradlew
-      - ./gradlew assembleDebug
+      - ./gradlew assembleDebug --stacktrace
 
     artifacts:
       - android/app/build/outputs/**/*.apk
