@@ -1,0 +1,6 @@
+{
+  "appId": "com.tracking.app",
+  "appName": "Tracking",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
