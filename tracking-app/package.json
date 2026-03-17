@@ -1,0 +1,13 @@
+{
+    "name": "tracking-app",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "@capacitor/core": "^5.0.0",
+        "@capacitor/android": "^5.0.0",
+        "@capacitor-community/background-geolocation": "^1.2.0"
+    },
+    "scripts": {
+        "build": "echo build"
+    }
+}
