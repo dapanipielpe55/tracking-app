@@ -5,7 +5,9 @@ workflows:
       node: latest
     scripts:
       - cd android
-      - chmod +x gradlew || true
-      - ./gradlew assembleDebug --stacktrace --debug
+      - ls -la | grep gradlew  # Verifica que existe
+      - file ./gradlew  # Verifica que es ejecutable
+      - ./gradlew --version  # Verifica que funciona
+      - ./gradlew assembleDebug --stacktrace
     artifacts:
       - android/app/build/outputs/**/*.apk
