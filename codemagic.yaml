@@ -6,12 +6,24 @@ workflows:
     scripts:
       - npm install
       - npm install @capacitor/cli
-      - npx cap init tracking com.tracking.app --web-dir=www || true
-      - npx cap add android || true
+
+      # Inicializar capacitor correctamente
+      - npx cap init tracking com.tracking.app --web-dir=www
+
+      # Crear android (sin || true para ver errores reales)
+      - npx cap add android
+
+      # Sincronizar
       - npx cap sync
-      - cd android
+
+      # Verificar que existe android
       - ls
-      - chmod +x gradlew || true
-      - ./gradlew assembleDebug
+      - ls android
+
+      # Entrar y compilar
+      - cd android
+      - chmod +x gradlew
+      - ./gradlew assembleDebug --stacktrace
+
     artifacts:
       - android/app/build/outputs/**/*.apk
