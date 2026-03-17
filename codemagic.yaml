@@ -7,33 +7,22 @@ workflows:
       - npm install
       - npm install @capacitor/cli
 
-      # DEBUG estructura
-      - pwd
-      - ls -la
-      - ls -la www || echo "NO EXISTE WWW"
-
-      # Inicializar capacitor (forzado limpio)
-      - rm -rf android
+      # Crear capacitor correctamente
       - npx cap init tracking com.tracking.app --web-dir=www
 
-      # ESTE ES EL PASO CLAVE (sin || true)
-      - npx cap add android
+      # IMPORTANTE: instalar android platform antes
+      - npm install @capacitor/android
 
-      # Verificar si se creó android
-      - ls -la
-      - ls -la android || echo "ANDROID NO SE CREO"
+      # Crear android (ahora sí funciona)
+      - npx cap add android
 
       # Sync
       - npx cap sync
 
-      # Verificar gradlew
-      - ls android
-      - ls android | grep gradlew || echo "NO HAY GRADLEW"
-
       # Compilar
       - cd android
       - chmod +x gradlew
-      - ./gradlew assembleDebug --stacktrace
+      - ./gradlew assembleDebug
 
     artifacts:
       - android/app/build/outputs/**/*.apk
