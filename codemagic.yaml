@@ -1,12 +1,28 @@
-workflows:
-  android-build:
-    name: Android Build
-    environment:
-      node: latest
-    scripts:
-      - cd android
-      - gradle wrapper --gradle-version 8.1.0
-      - chmod +x gradlew
-      - ./gradlew assembleDebug --stacktrace
-    artifacts:
-      - android/app/build/outputs/**/*.apk
+# codemagic.yaml
+
+# Download Gradle
+install:
+  - name: Download Gradle
+    script: |
+      wget https://services.gradle.org/distributions/gradle-7.2-bin.zip
+      unzip gradle-7.2-bin.zip
+      export PATH=$PATH:$PWD/gradle-7.2/bin
+
+# Generate the wrapper
+  - name: Generate Wrapper
+    script: |
+      gradle wrapper
+
+# Build the Android project
+  - name: Build Android Project
+    script: |
+      ./gradlew build --info --stacktrace
+
+# Error Handling and Logging
+  - name: Check for Errors
+    script: |
+      if [ $? -ne 0 ]; then
+        echo "Build failed!"
+        exit 1
+      fi
+
